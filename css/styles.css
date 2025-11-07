@@ -20,10 +20,8 @@ header{
     justify-content: center;
 }
 
-main{
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 20% 80%;
+main > *{
+    margin: 10px;
 }
 
 .sidebar{

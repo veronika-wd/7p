@@ -1,0 +1,142 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "DejaVu Sans";
+
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+}
+
+
+header{
+    width: 100vw;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+main{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+.sidebar{
+    background-color: #ec5555;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 5px 10px;
+    height: 100%;
+}
+
+a{
+    text-decoration: none;
+    color: #2c3e50;
+}
+
+.main-cont{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.category-cont{
+    background-color: #ffffff;
+    padding: 5px 10px;
+}
+
+button{
+    border: none;
+    padding: 5px 10px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: all .3s ease-in-out;
+}
+
+button:hover{
+    background-color: #ada4a4;
+}
+
+
+.card-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 80%;
+    margin: 20px 0;
+    align-content: start;
+    justify-items: start;
+    background-color: #fff;
+}
+
+.card{
+    background-color: #f3c7c7;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    gap: 10px;
+}
+
+/* Общие стили для таблицы (опционально, для красоты) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* Полосатая раскраска строк */
+tbody tr:nth-child(even) {
+    background-color: #f1dddd;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Дополнительно: эффект при наведении */
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+table a{
+    color: #16222c;
+}
+
+table a:hover{
+    text-decoration: black;
+    text-decoration: underline;
+}
+
+.add-but{
+    width: 200px;
+    margin: 10px auto;
+}
+
+/*Блок цен на карточках товаров*/
+.prices-block{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}

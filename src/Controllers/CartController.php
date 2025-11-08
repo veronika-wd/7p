@@ -18,6 +18,17 @@ class CartController extends Controller
         parent::__construct($renderer);
     }
 
+
+    public function index(RequestInterface $request, ResponseInterface $response)
+    {
+        $cartItems = $this->cartService->getGroupedCartItems();
+
+        return $this->renderer->render($response, 'cart/index.php', [
+            'products' => ORM::forTable('products')->findArray(),
+            'cartItems' => $cartItems,
+        ]);
+    }
+
     public function add(RequestInterface $request, ResponseInterface $response)
     {
         $productId = $request->getParsedBody()['product_id'];
@@ -49,6 +60,10 @@ class CartController extends Controller
             ->where('cart_id', $cartId)
             ->where('product_id', $productId)
             ->findOne();
+
+        if ($cartItem['count'] == 1){
+            ORM::forTable('cart_items')->findOne($cartItem['id'])->delete();
+        }
 
         $cartItem->set('count', $cartItem['count'] - 1)->save();
 

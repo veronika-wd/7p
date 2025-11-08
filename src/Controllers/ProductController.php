@@ -5,14 +5,19 @@ namespace Src\Controllers;
 use ORM;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Views\PhpRenderer;
+use Src\Services\CartService;
 
 class ProductController extends Controller
 {
-    public function index(RequestInterface $request, ResponseInterface $response, array $args)
+    public function __construct(PhpRenderer $renderer, protected CartService $cartService)
     {
-        $cartId = $_COOKIE['cart_id'] ?? '';
+        parent::__construct($renderer);
+    }
 
-        $cartItems = ORM::forTable('cart_items')->where('cart_id', $cartId)->findArray();
+    public function index(RequestInterface $request, ResponseInterface $response)
+    {
+        $cartItems = $this->cartService->getGroupedCartItems();
 
         return $this->renderer->render($response, 'index.php', [
             'products' => ORM::forTable('products')->findArray(),

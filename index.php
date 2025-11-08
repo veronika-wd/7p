@@ -29,4 +29,6 @@ $app->post('/products/{id}/order', [ProductController::class, 'store']);
 $app->post('/cart/add', [CartController::class, 'add']);
 $app->post('/cart/subtract', [CartController::class, 'subtract']);
 
+$app->get('/cart', [CartController::class, 'index']);
+
 $app->run();

@@ -29,6 +29,28 @@ class CartService
             ->findOne();
     }
 
+    public function getCartItems() :array
+    {
+        $cartId = $this->getCartId();
+
+        return ORM::forTable('cart_items')
+            ->where('cart_id', $cartId)
+            ->findArray();
+    }
+
+    public function getGroupedCartItems():array
+    {
+        $cartItems = $this->getCartItems();
+        $result = [];
+
+        foreach ($cartItems as $cartItem) {
+            $result[$cartItem['product_id']] = $cartItem['count'];
+        }
+
+        return $result;
+
+    }
+
     public function getCartId(): int
     {
         if(isset($_COOKIE[self::COOKIE_NAME])){

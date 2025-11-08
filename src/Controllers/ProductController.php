@@ -14,4 +14,12 @@ class ProductController extends Controller
             'products' => ORM::forTable('products')->findMany(),
         ]);
     }
+    public function show(RequestInterface $request, ResponseInterface $response, array $args)
+    {
+        $productId = $args['id'];
+
+        return $this->renderer->render($response, 'show.php', [
+            'product' => ORM::forTable('products')->findOne($productId),
+        ]);
+    }
 }

@@ -19,7 +19,12 @@ class CartService
         ->save();
     }
 
-    protected function getCartId()
+    public function productExist(int $productId)
+    {
+        return ORM::forTable('cart_items')->where('product_id', $productId)->findOne();
+    }
+
+    public function getCartId()
     {
         if(isset($_COOKIE['cart_id'])){
             return $_COOKIE['cart_id'];

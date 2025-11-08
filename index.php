@@ -2,19 +2,9 @@
 
 use DI\Container;
 use Slim\Factory\AppFactory;
-use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Views\PhpRenderer;
-use Src\Controllers\AdminControllers\ApplicationController;
-use Src\Controllers\AdminControllers\CategoryController;
-use Src\Controllers\AdminControllers\GoodController;
 use Src\Controllers\CartController;
-use Src\Controllers\HomeController;
-use Src\Controllers\Auth\LoginController;
-use Src\Controllers\Auth\RegisterController;
 use Src\Controllers\ProductController;
-use Src\Controllers\UserController;
-use Src\Middleware\AdminMiddleware;
-use Src\Middleware\AuthMiddleware;
 
 require __DIR__ . '/vendor/autoload.php';
 

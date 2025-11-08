@@ -138,3 +138,20 @@ table a:hover{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
+
+/*Кнопки корзины*/
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.buttons input[type='submit']{
+    width: 20px;
+    height: 20px;
+}
+
+.buttons input[value='Добавить в корзину']{
+    width: 200px;
+    height: 20px;
+}

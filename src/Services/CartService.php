@@ -6,7 +6,9 @@ use ORM;
 
 class CartService
 {
-    public  function  add(int $productId)
+    private const COOKIE_NAME = 'cart_id';
+
+    public  function  add(int $productId): void
     {
         $cardId = $this->getCartId();
 
@@ -19,21 +21,24 @@ class CartService
         ->save();
     }
 
-    public function productExist(int $productId)
+    public function productExist(int $productId): ORM|bool
     {
-        return ORM::forTable('cart_items')->where('product_id', $productId)->findOne();
+        return ORM::forTable('cart_items')
+            ->where('cart_id', $this->getCartId())
+            ->where('product_id', $productId)
+            ->findOne();
     }
 
-    public function getCartId()
+    public function getCartId(): int
     {
-        if(isset($_COOKIE['cart_id'])){
-            return $_COOKIE['cart_id'];
+        if(isset($_COOKIE[self::COOKIE_NAME])){
+            return $_COOKIE[self::COOKIE_NAME];
         }
 
         $cart = ORM::forTable('carts')->create();
         $cart->save();
 
-        setcookie('cart_id', $cart->id, time() + 60 * 60 * 24 * 31);
+        setcookie(self::COOKIE_NAME, $cart->id, time() + 60 * 60 * 24 * 31, '/');
 
         return $cart->id;
     }

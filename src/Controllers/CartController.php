@@ -18,14 +18,14 @@ class CartController extends Controller
         parent::__construct($renderer);
     }
 
-    public function add( RequestInterface $request, ResponseInterface $response)
+    public function add(RequestInterface $request, ResponseInterface $response)
     {
         $productId = $request->getParsedBody()['product_id'];
 
         if (!$this->cartService->productExist($productId)){
             $this->cartService->add($productId);
         }else{
-            $cartId = $_COOKIE['cart_id'];
+            $cartId = $this->cartService->getCartId();
 
             $cartItem = ORM::forTable('cart_items')
                 ->where('cart_id', $cartId)
@@ -37,5 +37,22 @@ class CartController extends Controller
 
 
         return $response->withHeader('Location', '/products')->withStatus(302);
+    }
+
+    public function subtract(RequestInterface $request, ResponseInterface $response)
+    {
+        $productId = $request->getParsedBody()['product_id'];
+
+        $cartId = $_COOKIE['cart_id'];
+
+        $cartItem = ORM::forTable('cart_items')
+            ->where('cart_id', $cartId)
+            ->where('product_id', $productId)
+            ->findOne();
+
+        $cartItem->set('count', $cartItem['count'] - 1)->save();
+
+        return $response->withHeader('Location', '/products')->withStatus(302);
+
     }
 }

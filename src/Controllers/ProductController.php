@@ -33,4 +33,46 @@ class ProductController extends Controller
             'product' => ORM::forTable('products')->findOne($productId),
         ]);
     }
+
+    public function add(RequestInterface $request, ResponseInterface $response)
+    {
+        $productId = $request->getParsedBody()['product_id'];
+
+        if (!$this->cartService->productExist($productId)){
+            $this->cartService->add($productId);
+        }else{
+            $cartId = $this->cartService->getCartId();
+
+            $cartItem = ORM::forTable('cart_items')
+                ->where('cart_id', $cartId)
+                ->where('product_id', $productId)
+                ->findOne();
+
+            $cartItem->set('count', $cartItem['count'] + 1)->save();
+        }
+
+
+        return $response->withHeader('Location', '/products')->withStatus(302);
+    }
+
+    public function subtract(RequestInterface $request, ResponseInterface $response)
+    {
+        $productId = $request->getParsedBody()['product_id'];
+
+        $cartId = $_COOKIE['cart_id'];
+
+        $cartItem = ORM::forTable('cart_items')
+            ->where('cart_id', $cartId)
+            ->where('product_id', $productId)
+            ->findOne();
+
+        if ($cartItem['count'] == 1){
+            ORM::forTable('cart_items')->findOne($cartItem['id'])->delete();
+        }
+
+        $cartItem->set('count', $cartItem['count'] - 1)->save();
+
+        return $response->withHeader('Location', '/products')->withStatus(302);
+
+    }
 }

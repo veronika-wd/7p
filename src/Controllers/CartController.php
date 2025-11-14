@@ -47,7 +47,7 @@ class CartController extends Controller
         }
 
 
-        return $response->withHeader('Location', '/products')->withStatus(302);
+        return $response->withHeader('Location', '/cart')->withStatus(302);
     }
 
     public function subtract(RequestInterface $request, ResponseInterface $response)
@@ -67,7 +67,13 @@ class CartController extends Controller
 
         $cartItem->set('count', $cartItem['count'] - 1)->save();
 
-        return $response->withHeader('Location', '/products')->withStatus(302);
+        return $response->withHeader('Location', '/cart')->withStatus(302);
 
+    }
+
+    public function order(RequestInterface $request, ResponseInterface $response)
+    {
+        echo('работает и чо');
+        return $response->withHeader('Location', '/cart')->withStatus(302);
     }
 }

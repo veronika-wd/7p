@@ -12,10 +12,10 @@ class UserController extends Controller
     {
         $user = ORM::forTable('users')->findOne($_SESSION['user_id']);
 
-        $applications = ORM::forTable('applications')->where('user_phone', $user['login'])->findMany();
+        $user = ORM::forTable('orders')->where('login', $user['login'])->findMany();
 
         return $this->renderer->render($response, 'profile.php', [
-            'applications' => $applications,
+            'applications' => $oreder,
         ]);
     }
 }

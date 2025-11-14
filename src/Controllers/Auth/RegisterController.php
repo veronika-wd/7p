@@ -17,18 +17,19 @@ class RegisterController extends Controller
 
     public function register(RequestInterface $request, ResponseInterface $response, array $args)
     {
-        $login = $request->getParsedBody()['login'];
+        $phone = $request->getParsedBody()['phone'];
         $password = $request->getParsedBody()['password'];
 
-        ORM::forTable('users')->create([
-            'login' => $login,
+        $user = ORM::forTable('users')->create([
+            'phone' => $phone,
             'password' => $password,
-        ])->save();
+        ]);
+        $user->save();
 
-        $_SESSION['user_id'] = ORM::forTable('users')->max('id');
+        $_SESSION['user_id'] = $user['id'];
 
 
-        return $response->withHeader('Location', '/')->withStatus(302);
+        return $response->withHeader('Location', '/cart')->withStatus(302);
     }
 
 }

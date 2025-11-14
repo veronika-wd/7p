@@ -1,5 +1,9 @@
 <main>
     <h1>Корзина</h1>
+    <div class="menu">
+        <a href="/cart/order"><button>Заказать</button></a>
+        <a href="/products"><button>К товарам</button></a>
+    </div>
     <table>
         <thead>
         <tr>

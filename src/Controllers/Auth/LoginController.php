@@ -17,39 +17,20 @@ class LoginController extends Controller
     public function login(RequestInterface $request, ResponseInterface $response, array $args)
     {
 
-        $login = $request->getParsedBody()['login'];
+        $phone = $request->getParsedBody()['phone'];
         $password = $request->getParsedBody()['password'];
 
-        $user = ORM::forTable('users')->where('login', $login)->findOne();
+        $user = ORM::forTable('users')->where('phone', $phone)->findOne();
 
+        $_SESSION['user_id'] = $user['id'];
 
-
-        if ($user['password'] == $password){
-            $_SESSION['user_id'] = $user['id'];
-            if($user['is_admin'] === 1){
-                return $response->withHeader('Location', '/categories')->withStatus(302);
-            }
-            return $response->withHeader('Location', '/')->withStatus(302);
-        }
-
-
-
-        if ($user['password'] != $password){
-            echo 'Пароль неверный';
-            exit();
-        }
-
-        if (!$user){
-            echo 'Такого пользователя не существует';
-            exit();
-        }
-
+        return $response->withHeader('Location', '/cart')->withStatus(302);
     }
 
     public function logout(RequestInterface $request, ResponseInterface $response)
     {
         unset($_SESSION['user_id']);
-        return $response->withHeader('Location', '/')->withStatus(302);
+        return $response->withHeader('Location', '/products')->withStatus(302);
     }
 
 }

@@ -9,6 +9,14 @@
     <title>Тележки</title>
 </head>
 <body>
+<div class="header">
+    <?php if(!isset($_SESSION['user_id'])):?>
+        <a href="/login"><button>Авторизация</button></a>
+        <a href="/register"><button>Регистрация</button></a>
+    <?php else:?>
+        <a href="/logout"><button>Выйти</button></a>
+    <?php endif;?>
+</div>
 <?=$content?>
 </body>
 </html>

@@ -2,12 +2,6 @@
     <h1>Товары</h1>
     <div class="menu">
         <a href="/cart"><button>Моя корзина</button></a>
-        <?php if(!isset($_SESSION['user_id'])):?>
-        <a href="/login"><button>Авторизация</button></a>
-        <a href="/register"><button>Регистрация</button></a>
-        <?php else:?>
-            <a href="/logout"><button>Выйти</button></a>
-        <?php endif;?>
     </div>
     <table>
         <thead>

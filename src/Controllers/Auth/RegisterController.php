@@ -22,7 +22,7 @@ class RegisterController extends Controller
 
         $user = ORM::forTable('users')->create([
             'phone' => $phone,
-            'password' => $password,
+            'password' => md5($password),
         ]);
         $user->save();
 

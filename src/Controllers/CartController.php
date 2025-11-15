@@ -22,10 +22,15 @@ class CartController extends Controller
     public function index(RequestInterface $request, ResponseInterface $response)
     {
         $cartItems = $this->cartService->getGroupedCartItems();
+//        $closedCarts = ORM::forTable('carts')->where([
+//            'user_id' => $_SESSION['user_id'],
+//            'status' => 'closed',
+//        ])->findArray();
 
         return $this->renderer->render($response, 'cart/index.php', [
             'products' => ORM::forTable('products')->findArray(),
             'cartItems' => $cartItems,
+//            'closedCarts' => $closedCarts,
         ]);
     }
 
@@ -73,7 +78,31 @@ class CartController extends Controller
 
     public function order(RequestInterface $request, ResponseInterface $response)
     {
-        echo('работает и чо');
+        $userId = $_SESSION['user_id'];
+
+        $cartId = $this->cartService->getCartId();
+        $cartItems = $this->cartService->getCartItems();
+
+        foreach ($cartItems as $cartItem) {
+            $product = ORM::forTable('products')->findOne($cartItem['product_id']);
+
+            ORM::forTable('cart_items')->findOne($cartItem['id'])->set([
+                'price' => $product['price'],
+            ])->save();
+        }
+
+        ORM::forTable('orders')->create([
+            'user_id' => $userId,
+            'cart_id' => $cartId,
+        ])->save();
+
+        ORM::forTable('carts')->findOne($cartId)->set([
+            'status' => 'closed',
+        ])->save();
+
+
+        setcookie('cart_id', $cartId, time() - 60 * 60 * 24 * 31, '/');
+
         return $response->withHeader('Location', '/cart')->withStatus(302);
     }
 }

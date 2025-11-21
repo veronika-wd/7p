@@ -1,9 +1,9 @@
 <main>
-<!--    --><?php //var_dump($closedCarts)?>
     <h1>Корзина</h1>
     <div class="menu">
-        <a href="/cart/order"><button>Заказать</button></a>
+        <a href="/orders/add"><button>Заказать</button></a>
         <a href="/products"><button>К товарам</button></a>
+        <a href="/orders"><button>Мои заказы</button></a>
     </div>
     <div class="active">
         <?php if (count($cartItems) == 0):?>

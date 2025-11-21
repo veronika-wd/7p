@@ -5,6 +5,7 @@ use Slim\Factory\AppFactory;
 use Slim\Psr7\Factory\ResponseFactory;
 use Slim\Views\PhpRenderer;
 use Src\Controllers\Auth\LoginController;
+use Src\Controllers\Auth\OrderController;
 use Src\Controllers\Auth\RegisterController;
 use Src\Controllers\CartController;
 use Src\Controllers\ProductController;
@@ -45,7 +46,8 @@ $app->get('/cart', [CartController::class, 'index']);
 
 
 $app->group('/', function () use ($app) {
-    $app->get('/cart/order', [CartController::class, 'order']);
+    $app->get('/orders', [OrderController::class, 'index']);
+    $app->get('/orders/add', [OrderController::class, 'store']);
     $app->get('/logout', [LoginController::class, 'logout']);
 })->add(new AuthMiddleware($container->get(ResponseFactory::class)));
 

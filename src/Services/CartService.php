@@ -38,9 +38,9 @@ class CartService
             ->findArray();
     }
 
-    public function getGroupedCartItems(): array
+    public function getGroupedCartItems(?int $cartId = null): array
     {
-        $cartItems = $this->getCartItems();
+        $cartItems = $this->getCartItems($cartId);
         $result = [];
 
         foreach ($cartItems as $cartItem) {
